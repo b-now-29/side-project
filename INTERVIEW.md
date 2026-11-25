@@ -40,9 +40,11 @@
 
 **Q4. CI workflow에서 `actions/checkout@v4`는 tag로, `gradle/actions/setup-gradle@af1da67...`은 commit SHA로 지정되어 있다. 차이는 무엇이고, 왜 SHA로 고정하는가?**
 
-- 개발자 답변: 모르겠다. (조사 중)
-- 조사 방향: tag는 누가, 언제, 어느 commit으로 옮길 수 있는가? SHA는 옮길 수 있는가? GitHub Docs의 "Security hardening for GitHub Actions" → "Using third-party actions" 섹션을 읽는다. 키워드는 supply chain.
-- 정리된 답변: (조사 후 재답변 → 채점 후 작성)
+- 개발자 답변 (1차): 모르겠다. 이후 hint ladder 3단계까지 진행했다(tag 이동 시나리오와 annotated/lightweight tag 설명).
+- 확인 질문: tag 이동 공격에 노출된 action은? 이 프로젝트에서는 어떻게 통일할 것인가?
+- 개발자 답변 (2차): 노출된 것은 `checkout`과 `setup-java`. 모두 tag로 통일한다. 이유는 (1) 실력 향상을 위한 개인 프로젝트이고, (2) 버전 관리가 편하며, (3) Dependabot을 쓰지 않으므로 SHA로 두면 매번 사람이 확인해야 하기 때문이다.
+- 채점: △ 1번은 정답이고, 2번의 결론도 받아들일 수 있다. 하지만 근거가 면접에서 통하지 않는다. "개인 프로젝트라서"는 "보안을 신경 쓰지 않았다"로 들린다. "Dependabot을 안 써서"는 순환 논리다. Dependabot은 설정 파일 하나면 되므로, 면접관은 곧바로 "그럼 왜 안 썼어요?"라고 묻는다. 좋은 근거는 위협 모델(피해 범위)과 action 제공자에 대한 신뢰 수준이다.
+- 정리된 답변: `@v4` 같은 tag는 이름표(ref)라서 annotated든 lightweight든 관리자나 계정 탈취자가 `git tag -f`로 다른 commit에 옮길 수 있다. 그러면 내 `ci.yml`은 그대로인데 다른 코드가 내 CI에서 secrets와 `GITHUB_TOKEN` 권한으로 실행된다. 이것이 supply chain 공격이며, 2025년 3월 `tj-actions/changed-files` 사건이 실제 사례다. commit SHA는 내용으로 계산한 hash라서 다른 코드로 바꿔치기할 수 없다. 대신 업데이트를 자동으로 따라가지 못하므로 Dependabot(`github-actions` ecosystem)으로 갱신 PR을 받는 것이 보통이다. 이 프로젝트는 현재 CI에 secrets가 없고 `contents: read` 권한으로 build만 하므로, 탈취돼도 피해 범위가 작다. 그래서 GitHub 공식 actions(`actions/*`)는 편의를 위해 tag로 쓴다. 신뢰 경계 밖의 third-party action은 SHA로 고정하거나, 최소한 그 위험을 인지하고 선택한다. 배포(CD)가 추가되어 secrets가 생기는 시점에 전부 SHA와 Dependabot 조합으로 전환한다.
 
 **Q5. `./gradlew build`를 하면 포맷 검사가 왜 같이 실행되는가? 포맷이 틀린 코드가 PR로 올라오면 어디서, 어떻게 막히는가?**
 
