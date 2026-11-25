@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Running Spotless check..."
+
+./gradlew spotlessCheck
+
+if [ $? -ne 0 ]; then
+    echo "❌ Spotless check failed. Commit aborted."
+    echo "Run './gradlew spotlessApply' to fix formatting."
+    exit 1
+fi
+
+echo "✅ Pre-commit checks passed."

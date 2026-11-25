@@ -20,12 +20,6 @@ public class Event {
 
   protected Event() {}
 
-  public boolean end() {
-    logger.debug("start: " + eventStartTime);
-    logger.debug("end: " + eventEndTime);
-    return eventStartTime.isAfter(eventEndTime);
-  }
-
   public Event create(LocalDateTime eventStartTime, LocalDateTime eventEndTime) {
     Event event = new Event();
     event.eventStartTime = eventStartTime;
