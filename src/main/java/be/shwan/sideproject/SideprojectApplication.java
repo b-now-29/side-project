@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SideprojectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SideprojectApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(SideprojectApplication.class, args);
+  }
 }
