@@ -1,3 +1,10 @@
 spring:
   application:
     name: sideproject
+
+logging:
+  level:
+    root: info
+    be.shwan.sideproject: debug
+    org.springframework: warn
+    org.hibernate: error
