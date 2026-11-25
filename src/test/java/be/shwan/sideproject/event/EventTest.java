@@ -28,7 +28,7 @@ class EventTest {
   void endEvent() {
     Event event = new Event();
     Event createdEvent =
-            event.create(LocalDateTime.of(2026, 1, 1, 0, 0), LocalDateTime.of(2026, 6, 30, 23, 59));
+        event.create(LocalDateTime.of(2026, 1, 1, 0, 0), LocalDateTime.of(2026, 6, 30, 23, 59));
     assertTrue(createdEvent.isEnd());
   }
 }
