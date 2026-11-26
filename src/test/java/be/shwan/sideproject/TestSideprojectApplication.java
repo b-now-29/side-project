@@ -2,6 +2,7 @@ package be.shwan.sideproject;
 
 import org.springframework.boot.SpringApplication;
 
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestSideprojectApplication {
 
   public static void main(String[] args) {
