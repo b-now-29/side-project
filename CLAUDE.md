@@ -37,6 +37,10 @@ First-come-first-served coupon issuance API. MVP:
 
 The `userId` request header stands in for user identity. Coupon use/cancel, auth, admin UI and CD come after M6. When the developer proposes extra features, park them in a "Later" list and steer back to the current milestone.
 
+### Later
+
+- 이벤트 하나에 여러 종류의 쿠폰(쿠폰 template/정책 분리) — 2026-11-26 M2 중 제안. MVP는 "이벤트 1개 = 쿠폰 1종류"
+
 Stack: Java 25, Spring Boot 4, JPA, PostgreSQL, Redis (from M4), JUnit 5, Testcontainers, Spotless, Checkstyle, GitHub Actions, k6. Tests run against real PostgreSQL via Testcontainers, because H2's locking and isolation behaviour differs and would make M3 results meaningless. Public GitHub repo with small, frequent commits.
 
 ## Roadmap
