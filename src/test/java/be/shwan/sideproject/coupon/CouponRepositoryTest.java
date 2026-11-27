@@ -4,26 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import be.shwan.sideproject.event.Event;
 import be.shwan.sideproject.event.EventRepository;
-import jakarta.transaction.Transactional;
+import be.shwan.sideproject.support.RepositoryTestSupport;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DataJpaTest
-@Testcontainers
-@Transactional
-class CouponRepositoryTest {
-  @Container @ServiceConnection
-  static PostgreSQLContainer<?> postgres = new PostgreSQLContainer("postgres:19");
+class CouponRepositoryTest extends RepositoryTestSupport {
 
-  @Autowired TestEntityManager em;
   @Autowired CouponRepository couponRepository;
   @Autowired EventRepository eventRepository;
 
