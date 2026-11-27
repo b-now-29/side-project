@@ -38,7 +38,7 @@ class EventServiceImpTest extends ServiceTestSupport {
     Event value = captor.getValue();
     assertEquals(testTitle, value.getTitle());
     assertEquals(testTotalCount, value.getTotalCount());
-    assertNotNull(value.getEventStartDateTime());
-    assertNotNull(value.getEventEndDateTime());
+    assertEquals(testEventStartDateTime, value.getEventStartDateTime());
+    assertEquals(testEventEndDateTime, value.getEventEndDateTime());
   }
 }
