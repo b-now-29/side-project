@@ -1,15 +1,13 @@
 package be.shwan.sideproject.event;
 
+import be.shwan.sideproject.exception.BusinessException;
+import be.shwan.sideproject.exception.ErrorCode;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Entity
 public class Event {
-  private static final Logger logger = LoggerFactory.getLogger(Event.class);
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "event_id", nullable = false)
@@ -40,25 +38,16 @@ public class Event {
       int totalCount,
       LocalDateTime eventStartDateTime,
       LocalDateTime eventEndDateTime) {
+    if (eventStartDateTime.isAfter(eventEndDateTime))
+      throw new BusinessException(ErrorCode.EARLY_END_DATE_TIME_THAN_START_DATE_TIME);
     Event event = new Event();
     event.title = title;
     event.totalCount = totalCount;
-    setupDefaultValue(event, eventStartDateTime, eventEndDateTime);
-    return event;
-  }
-
-  public static Event create(LocalDateTime eventStartDateTime, LocalDateTime eventEndDateTime) {
-    Event event = new Event();
-    setupDefaultValue(event, eventStartDateTime, eventEndDateTime);
-    return event;
-  }
-
-  private static void setupDefaultValue(
-      Event event, LocalDateTime eventStartTime, LocalDateTime eventEndTime) {
-    event.eventStartDateTime = eventStartTime;
-    event.eventEndDateTime = eventEndTime;
+    event.eventStartDateTime = eventStartDateTime;
+    event.eventEndDateTime = eventEndDateTime;
     event.createdAt = LocalDateTime.now();
     event.updatedAt = LocalDateTime.now();
+    return event;
   }
 
   public boolean isEnd() {
@@ -68,14 +57,15 @@ public class Event {
 
   @Override
   public boolean equals(Object o) {
+    if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Event event = (Event) o;
-    return Objects.equals(id, event.id);
+    return id != null && Objects.equals(id, event.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(id);
+    return getClass().hashCode();
   }
 
   public Long getId() {
@@ -84,5 +74,17 @@ public class Event {
 
   public String getTitle() {
     return title;
+  }
+
+  public int getTotalCount() {
+    return totalCount;
+  }
+
+  public LocalDateTime getEventStartDateTime() {
+    return eventStartDateTime;
+  }
+
+  public LocalDateTime getEventEndDateTime() {
+    return eventEndDateTime;
   }
 }

@@ -8,7 +8,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
 @TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {
+public class TestcontainersConfiguration {
 
   @Bean
   @ServiceConnection
