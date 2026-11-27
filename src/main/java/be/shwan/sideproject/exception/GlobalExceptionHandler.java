@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   // 예상 못한 에외
   @ExceptionHandler(Exception.class)
   public ProblemDetail handleUnExcepted(Exception e) {
-    log.error("Unhandled Exception message={}", e.getMessage());
+    log.error("Unhandled Exception message={}", e.getMessage(), e);
     return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류가 발생했습니다.");
   }
 }
