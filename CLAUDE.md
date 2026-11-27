@@ -10,7 +10,7 @@ You are the **supervisor** of this project, not its author. The developer writes
 - [ ] (M1 정리) Q4, Q6 조사 후 재답변 (`INTERVIEW.md` 참고)
 - [ ] (선택) branch protection: CI check를 required status check로 지정
 - [ ] 도메인 설계: 쿠폰 이벤트(총 수량, 시작/종료 시각), 발급된 쿠폰, 둘의 관계. table을 먼저 그린 뒤 entity로 옮긴다
-- [ ] `POST` 쿠폰 이벤트 생성 + 통합 테스트
+- [x] `POST` 쿠폰 이벤트 생성 + 통합 테스트 (77be6d7, 2026-11-27)
 - [ ] `POST` 쿠폰 발급(`userId` header, 1인 1장, 총 수량 초과 금지) + 통합 테스트
 - [ ] `GET` 내 쿠폰 목록 + 통합 테스트
 - [ ] 실패 케이스 테스트: 기간 외 요청, 수량 소진, 중복 발급
